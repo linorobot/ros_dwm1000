@@ -1,0 +1,14 @@
+<launch>
+    <arg name="map_file" default="$(find ros_dwm1000)/maps/map.yaml"/>
+    <node pkg="map_server" name="map_server"  type="map_server" args="$(arg map_file)" />
+
+    <include file="$(find ros_dwm1000)/launch/tf.launch" />
+
+    <node pkg="ros_dwm1000" name="ros_dwm1000"  type="localize.py" output="screen">
+        <param name="serial_port" value="/dev/ttyUSB0" />
+        <param name="req_anchor" value="3" />
+        <param name="min_range" value="0.1" />
+        <param name="max_range" value="10.1" />
+        <param name="frame_id" value="tag_link" />
+    </node>
+</launch>
