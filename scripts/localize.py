@@ -68,16 +68,16 @@ def is_listed(anchors, id):
 def get_serial_data():
     # ser.write('+')
     start = ser.read()
-    return ser.readline().strip('$\r\n').split(',')
-    # if start == '$':
-    #     data_string = ser.readline().strip('\r\n').split(',')
-    #     return data_string
-    # else:
-    #     return None
+    # return ser.readline().strip('$\r\n').split(',')
+    if start == '$':
+        data_string = ser.readline().strip('\r\n').split(',')
+        return data_string
+    else:
+        return None
 
 if __name__ == '__main__':
 
-    rospy.init_node('lips')
+    rospy.init_node('ros_dwm1000')
     listener = tf.TransformListener()
     start_time = rospy.get_time()
     #create rosparameters
@@ -104,15 +104,14 @@ if __name__ == '__main__':
     beacon_count = 0
 
     while not rospy.is_shutdown():
-        #just give some delay for serial
-        rospy.sleep(0.1)
         data_string = get_serial_data()
-        print data_string
-        if 'None' != data_string:
-            # print "hello"
+        # print data_string
+        if None != data_string:
             #check if current anchor has already been listed
             #check if the current range is within specified distance
-            if (not is_listed(anchors, data_string[0])) and (MIN_RANGE < float(data_string[1]) < MAX_RANGE):
+            # if (not is_listed(anchors, data_string[0])) and (MIN_RANGE < float(data_string[1]) < MAX_RANGE):
+            if MIN_RANGE < float(data_string[1]) < MAX_RANGE:
+
                 anchors.append(data_string[0])
                 ranges.append(data_string[1])
                 transforms.append(get_transform(data_string[0]))
@@ -121,7 +120,6 @@ if __name__ == '__main__':
         #perform trilateration once enough anchors have been found
         if beacon_count == REQ_ANCHOR:
             #do trilateration
-            print transforms
             pos = get_tag_location(anchors,ranges,transforms)
 
             #broadcast the transform
