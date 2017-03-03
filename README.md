@@ -39,7 +39,7 @@ anchor codes to have unique address per anchor from:
     $ pip install scipy
     $ pip install shapely
     ```
-
+    
 2. Install map_server
 
     ```sh
@@ -61,11 +61,10 @@ the exact points you want your anchors placed. Open RVIZ and click on the locati
 each anchor must be the same as the address defined in Arduino (_currentShortAddress[]).
 
 ###Usage
-1. Run lips.launch:			
+1. Run localize.launch:			
 
     ```sh
-    $ roslaunch uwb_localization localize.launch
-
+    $ roslaunch ros_dwm1000 localize.launch
     ```
 
 ###Parameters
