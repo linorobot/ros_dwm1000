@@ -15,7 +15,7 @@ Seeedstudio's DRU for 2-layer board was used to verify the design.
 2. Download the DWM1000 Arduino library https://github.com/thotro/arduino-dw1000 .
 
 3. The current DWM1000 Arduino library  uses random address for the anchors and doesn't support arbitrary addresses.
-You need to edit https://github.com/thotro/arduino-dw1000/blob/master/src/DW1000Ranging.cpp#L164-L165 every time you upload the
+You need to edit https://github.com/grassjelly/arduino-dw1000/blob/master/src/DW1000Ranging.cpp#L164-L165 every time you upload the
 anchor codes to have unique address per anchor from:
 
     ```c++
