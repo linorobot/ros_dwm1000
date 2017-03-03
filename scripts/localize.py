@@ -82,6 +82,7 @@ if __name__ == '__main__':
     rospy.init_node('ros_dwm1000')
     listener = tf.TransformListener()
     start_time = rospy.get_time()
+
     #create rosparameters
     MIN_RANGE = rospy.get_param('/ros_dwm1000/min_range', 0.5)
     MAX_RANGE = rospy.get_param('/ros_dwm1000/max_range', 10.0)
@@ -100,19 +101,21 @@ if __name__ == '__main__':
     ser.timeout = None
     rospy.loginfo("Connected to %s", ser.portstr)
 
+    #lists to store anchors found
     ranges = []
     anchors = []
     transforms = []
     beacon_count = 0
 
     while not rospy.is_shutdown():
+        #get the stream of data from the tag through the serial port
         parsed_data = get_serial_data()
+
         # print parsed_data
         if None != parsed_data:
             #check if the current range is within specified distance
             if MIN_RANGE < float(parsed_data[1]) < MAX_RANGE:
                 #append respective arrays of the anchor found
-
                 #list of anchor IDs found
                 anchors.append(parsed_data[0])
                 #list of distance between tag and anchors found
@@ -134,7 +137,7 @@ if __name__ == '__main__':
                             FRAME_ID,
                             "map")
 
-            #TODO: Publish pos for EKF.
+            #TODO: Publish pos as geometry_msgs/PoseWithCovarianceStamped for EKF and only broadcast TF as an option.
 
             # clear lists once trilateration is done for the next cycle
             beacon_count = 0

@@ -74,8 +74,8 @@ Tag's serial port.
 #####frame_id(default: 'uwb_tag')
 Tag's frame_id when transform's published from map to tag.
 
-#####req_anchor(default: 2)
-The mininum number of anchors the system must find before performing trilateration between anchors. Increase this if you want to improve the accuracy. Each tag can only support up to 4 anchors now.
+#####req_anchor(default: 3)
+The mininum number of anchors the system must find before performing trilateration between anchors. Increase this if you want to improve the accuracy. This can be tweaked down to a minimum of 2 anchors. Each tag can only support up to 4 anchors now.
 
 #####min_range(default: 0.5)
 The minimum probable distance from an anchor to a tag to prevent false reading. For example, if your anchor is hanging 1 m away from
