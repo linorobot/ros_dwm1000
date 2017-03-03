@@ -105,7 +105,7 @@ if __name__ == '__main__':
     ranges = []
     anchors = []
     transforms = []
-    beacon_count = 0
+    anchors_found = 0
 
     while not rospy.is_shutdown():
         #get the stream of data from the tag through the serial port
@@ -122,10 +122,10 @@ if __name__ == '__main__':
                 ranges.append(parsed_data[1])
                 #list of static TFs of the anchors found.
                 transforms.append(get_transform(parsed_data[0]))
-                beacon_count += 1
+                anchors_found += 1
 
         #perform trilateration once enough anchors have been found
-        if beacon_count == REQ_ANCHOR:
+        if anchors_found == REQ_ANCHOR:
             #do trilateration
             pos = get_tag_location(anchors,ranges,transforms)
 
@@ -140,7 +140,7 @@ if __name__ == '__main__':
             #TODO: Publish pos as geometry_msgs/PoseWithCovarianceStamped for EKF and only broadcast TF as an option.
 
             # clear lists once trilateration is done for the next cycle
-            beacon_count = 0
+            anchors_found = 0
             ranges = []
             transforms = []
             anchors = []
