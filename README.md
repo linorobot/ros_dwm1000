@@ -1,6 +1,6 @@
 #ros_dwm1000
 
-ROS Indoor/Outdoor Positioning System framework(ROS) based on Decawave's DWM1000 Ultra Wide Band transceivers.
+ROS Indoor/Outdoor Positioning System based on Decawave's DWM1000 Ultra Wide Band transceivers.
 The whole system was tested indoors with 3 anchors and 1 tag. Technically this should work outdoors as well.
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/BuBnmrkJ9BY/maxresdefault.jpg)](https://www.youtube.com/embed/BuBnmrkJ9BY "ROS Indoor Localization using Decawave's UWB Transceivers ")
