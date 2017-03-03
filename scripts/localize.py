@@ -66,12 +66,14 @@ def is_listed(anchors, id):
             pass
 
 def get_serial_data():
-    # ser.write('+')
     start = ser.read()
     # return ser.readline().strip('$\r\n').split(',')
+    # expected data from the serial port is: $<anchor_id>,<range in cm>,\r\n
     if start == '$':
-        data_string = ser.readline().strip('\r\n').split(',')
-        return data_string
+        parsed_data = ser.readline().strip('\r\n').split(',')
+        # anchor id is stored in index 0 - parsed_data[0]
+        # range is stored in index 1 - parsed_data[1]
+        return parsed_data
     else:
         return None
 
@@ -104,17 +106,19 @@ if __name__ == '__main__':
     beacon_count = 0
 
     while not rospy.is_shutdown():
-        data_string = get_serial_data()
-        # print data_string
-        if None != data_string:
-            #check if current anchor has already been listed
+        parsed_data = get_serial_data()
+        # print parsed_data
+        if None != parsed_data:
             #check if the current range is within specified distance
-            # if (not is_listed(anchors, data_string[0])) and (MIN_RANGE < float(data_string[1]) < MAX_RANGE):
-            if MIN_RANGE < float(data_string[1]) < MAX_RANGE:
+            if MIN_RANGE < float(parsed_data[1]) < MAX_RANGE:
+                #append respective arrays of the anchor found
 
-                anchors.append(data_string[0])
-                ranges.append(data_string[1])
-                transforms.append(get_transform(data_string[0]))
+                #list of anchor IDs found
+                anchors.append(parsed_data[0])
+                #list of distance between tag and anchors found
+                ranges.append(parsed_data[1])
+                #list of static TFs of the anchors found.
+                transforms.append(get_transform(parsed_data[0]))
                 beacon_count += 1
 
         #perform trilateration once enough anchors have been found
@@ -129,8 +133,10 @@ if __name__ == '__main__':
                             rospy.Time.now(),
                             FRAME_ID,
                             "map")
-            # print pos
-            # reset all lists
+
+            #TODO: Publish pos for EKF.
+
+            # clear lists once trilateration is done for the next cycle
             beacon_count = 0
             ranges = []
             transforms = []
