@@ -12,10 +12,8 @@ Male so you can plug it straight to a power bank and deploy the anchors remotely
 1. If you wish to fabricate the PCB, the Gerber files are included /hardware/pcb/fabricate.
 Seeedstudio's DRU for 2-layer board was used to verify the design.
 
-2. Download the Forked DWM1000 Arduino library https://github.com/grassjelly/arduino-dw1000 from Thotro.
-
-3. The DWM1000 Arduino library  uses random address for the anchors and doesn't support arbitrary addresses.
-You need to edit https://github.com/grassjelly/arduino-dw1000/blob/master/src/DW1000Ranging.cpp#L164-L165 every time you upload the
+2. The DWM1000 Arduino library  uses random address for the anchors and doesn't support arbitrary addresses.
+You need to edit https://github.com/grassjelly/ros_dwm1000/blob/master/hardware/firmware/anchor/lib/DW1000/DW1000Ranging.cpp#L166-L167 every time you upload the
 anchor codes to have unique address per anchor from:
 
     ```c++
@@ -28,8 +26,6 @@ anchor codes to have unique address per anchor from:
     _currentShortAddress[0] = 1;
     _currentShortAddress[1] = 0;
     ```
-
-4. Save DW1000Ranging.cpp and upload the codes from /hardware/arduino to your tag and anchors.
 
 ###Installation
 1. Install dependencies
