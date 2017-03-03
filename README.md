@@ -39,7 +39,7 @@ anchor codes to have unique address per anchor from:
     $ pip install scipy
     $ pip install shapely
     ```
-    
+
 2. Install map_server
 
     ```sh
@@ -48,8 +48,8 @@ anchor codes to have unique address per anchor from:
 
 3. Build the package
 
-    ```sh
-    $ cd ~/catkin_ws
+    ```sh
+    $ cd ~/catkin_ws
     $ catkin_make
     ```
 
