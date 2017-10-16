@@ -59,11 +59,14 @@ def get_tag_location(anchors, ranges, transforms):
     return {'x':B.x, 'y':B.y, 'z':B.z}
 
 def is_listed(anchors, id):
+    anchorKey = 0
     for anchor in anchors:
         if anchor == id:
-            return True
+            return anchorKey
         else:
             pass
+        anchorKey += 1
+    return 'f'
 
 def get_serial_data():
     start = ser.read()
@@ -115,15 +118,21 @@ if __name__ == '__main__':
         if None != parsed_data:
             #check if the current range is within specified distance
             if MIN_RANGE < float(parsed_data[1]) < MAX_RANGE:
-                #append respective arrays of the anchor found
-                #list of anchor IDs found
-                anchors.append(parsed_data[0])
-                #list of distance between tag and anchors found
-                ranges.append(parsed_data[1])
-                #list of static TFs of the anchors found.
-                transforms.append(get_transform(parsed_data[0]))
-                anchors_found += 1
-
+                alreadyFound = is_listed(anchors,parsed_data[0])
+                if alreadyFound == 'f':
+                    #append respective arrays of the anchor found
+                    #list of anchor IDs found
+                    anchors.append(parsed_data[0])
+                    #list of distance between tag and anchors found
+                    ranges.append(parsed_data[1])
+                    #list of static TFs of the anchors found.
+                    transforms.append(get_transform(parsed_data[0]))
+                    anchors_found += 1
+                    print(parsed_data[0])
+                else:
+                    #updates the range of the anchor
+                    ranges[alreadyFound] = parsed_data[1]
+                    
         #perform trilateration once enough anchors have been found
         if anchors_found == REQ_ANCHOR:
             #do trilateration
