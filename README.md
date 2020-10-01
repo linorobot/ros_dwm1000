@@ -1,3 +1,7 @@
+first of all this is an awesome project guys you can edit it and make it more better.
+this is a positioning system which will work indoor and outdoor both.
+hope u all like it:)
+
 # ros_dwm1000
 
 ROS Indoor/Outdoor Positioning System based on Decawave's DWM1000 Ultra Wide Band transceivers.
